@@ -1,3 +1,11 @@
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +33,34 @@ public class HistogramGenerator {
     }
 
     static void generateHistogram(List<Integer> gradesArray){
-        System.out.println(5);
+        XYSeriesCollection dataset = new XYSeriesCollection();
+
+        // Calculate grade frequencies
+        int[] frequencies = new int[11];
+        for (double grade : gradesArray) {
+            frequencies[(int) grade]++;
+        }
+
+        XYSeries data = new XYSeries("Grades Frequencies");
+
+        for (int i = 0; i < frequencies.length; i++) {
+            data.add(i, frequencies[i]);
+        }
+
+        dataset.addSeries(data);
+
+        boolean legend = false; // do not visualize a legend
+        boolean tooltips = false; // do not visualize tooltips
+        boolean urls = false; // do not visualize urls
+
+        JFreeChart chart = ChartFactory.createXYLineChart("Grades Frequencies", "Grade", "Frequency", dataset,
+                PlotOrientation.VERTICAL, legend, tooltips, urls);
+
+        ChartFrame frame = new ChartFrame("Grades Frequencies", chart);
+        frame.pack();
+
+        frame.setVisible(true);
+
     }
 
     public static void main(String[] args) {
@@ -34,9 +69,6 @@ public class HistogramGenerator {
         InputStream inputStream = classLoader.getResourceAsStream(gradesFile);
 
         List<Integer> gradesArray = readGrades(inputStream);
-        for(int g: gradesArray){
-            System.out.println(g);
-        }
-        //generateHistogram(gradesArray);
+        generateHistogram(gradesArray);
     }
 }
