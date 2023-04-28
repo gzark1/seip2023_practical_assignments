@@ -65,10 +65,13 @@ public class HistogramGenerator {
 
     public static void main(String[] args) {
         String gradesFile = args[0];
-        ClassLoader classLoader = HistogramGenerator.class.getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream(gradesFile);
+        try{
+            InputStream inputStream = new FileInputStream(gradesFile);
+            List<Integer> gradesArray = readGrades(inputStream);
+            generateHistogram(gradesArray);
+        }catch(IOException e){
+            e.getStackTrace();
+        }
 
-        List<Integer> gradesArray = readGrades(inputStream);
-        generateHistogram(gradesArray);
     }
 }
