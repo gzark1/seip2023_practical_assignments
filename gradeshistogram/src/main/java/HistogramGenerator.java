@@ -10,9 +10,24 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HistogramGenerator {
+/***
+ * The purpose of this class is to read a file name from the command line,
+ * then generate a histogram based on the list of numbers of that file
+ * @author gzark1
+ * @since April 2023
+ */
 
-    static List<Integer> readGrades(InputStream inputStream){
+public class HistogramGenerator {
+    /**
+     * A static method that reads the numbers from an inputStream, stores them in a List
+     * and returns the List
+     * @param inputStream
+     *     The inputStream given
+     * @return
+     *     The List of numbers read
+     * @throws IOException
+     */
+    static List<Integer> readGrades(InputStream inputStream) throws IOException {
 
         List<Integer> gradesArray = new ArrayList<>();
         try {
@@ -32,6 +47,12 @@ public class HistogramGenerator {
         return gradesArray;
     }
 
+    /**
+     * A static method that receives a List of Integers, calculates the grade frequencies and
+     * displays a JFreeChart XYLine chart using a XYSeriesCollection dataset.
+     * @param gradesArray
+     *     The List given
+     */
     static void generateHistogram(List<Integer> gradesArray){
         XYSeriesCollection dataset = new XYSeriesCollection();
 
@@ -62,7 +83,13 @@ public class HistogramGenerator {
         frame.setVisible(true);
 
     }
-
+    /**
+     * The main method of the program, which executes the readGrades and generateHistogram methods.
+     * @param args
+     *     main takes a single command-line argument, which represents the path of the file
+     *     containing the numbers to be read.
+     * An InputStream is created from main and passed to readGrades method.
+     */
     public static void main(String[] args) {
         String gradesFile = args[0];
         try{
