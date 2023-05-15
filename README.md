@@ -41,3 +41,5 @@ The repository is structured as follows:
 - `./gradeshistogram`: The module Maven project for the grades histogram assignment.
 - `./gradehistogram/src`: The gradehistogram module's source code directory containing the Java classes for the assignment.
 - `./gradehistogram/pom.xml`: The Maven POM file for the gradehistogram module project.
+## Unit Testing Project
+You can read Unit Testing Project's README.md file [here](unittesting/README.md)
