@@ -6,8 +6,10 @@ import static org.junit.Assert.*;
 
 public class ArithmeticOperationsTest {
 
-    @Test
-    void test(){
-
+    @Test(expected = ArithmeticException.class)
+    public void divideShouldThrowArithmeticExceptionIfDividedBy0(){
+        ArithmeticOperations arithmeticOps = new ArithmeticOperations();
+        arithmeticOps.divide(5,0);
     }
+
 }
