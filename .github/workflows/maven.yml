@@ -27,3 +27,9 @@ jobs:
         run: mvn -B package jacoco:report --file pom.xml
       - name: Run Tests
         run: mvn test --file pom.xml
+
+      - name: Upload JaCoCo report
+        uses: actions/upload-artifact@v2
+        with:
+          name: JaCoCo Report
+          path: unittesting/target/site/jacoco/index.html
