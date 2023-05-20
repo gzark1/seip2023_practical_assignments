@@ -27,3 +27,12 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: Run Tests
         run: mvn test --file pom.xml
+
+      - name: Add coverage to PR
+        id: jacoco
+        uses: madrapps/jacoco-report@v1.3
+        with:
+          paths: unittesting/target/site/jacoco/index.html
+          token: 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
+          min-coverage-overall: 40
+          min-coverage-changed-files: 60
