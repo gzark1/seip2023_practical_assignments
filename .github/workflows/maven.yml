@@ -27,11 +27,12 @@ jobs:
         run: mvn -B package --file pom.xml
       - name: Run Tests
         run: mvn test --file pom.xml
-      - name: Generate JaCoCo Report
-        uses: matthieusieben/jacoco-report-action@v2
 
-      - name: Upload JaCoCo Report
-        uses: actions/upload-artifact@v2
+      - name: Add coverage to PR
+        id: jacoco
+        uses: madrapps/jacoco-report@v1.3
         with:
-          name: jacoco-report
-          path: target/site/jacoco
+          paths: unittesting/target/site/jacoco/index.html
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 40
+          min-coverage-changed-files: 60
