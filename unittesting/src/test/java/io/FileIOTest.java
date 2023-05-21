@@ -39,4 +39,12 @@ public class FileIOTest {
         int[] numbersArray = fileIO.readFile(filepath);
     }
 
+    @Test
+    public void testReadFileContainsInvalidEntries() {
+        String filepath = resourcesPath + "InvalidEntriesFile.txt";
+        int[] numbersArray = fileIO.readFile(filepath);
+        int[] expectedNumbers = new int[] { 3, 51, 10, 1, 49, 99};
+        assertArrayEquals(expectedNumbers, fileIO.readFile(filepath));
+    }
+
 }
