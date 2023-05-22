@@ -1,4 +1,4 @@
-![workflow status badge](https://github.com/gzark1/seip2023_practical_assignments/actions/workflows/maven.yml/badge.svg)
+[![Workflow Status](https://github.com/gzark1/seip2023_practical_assignments/actions/workflows/maven.yml/badge.svg)](https://github.com/gzark1/seip2023_practical_assignments/actions/workflows/maven.yml)
 # SEIP2023 Practical Assignments
 
 This Git repository contains lab assignments for the "Software Engineering in Practice" course. Each assignment is organized as a module within the parent Maven project.
