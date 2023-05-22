@@ -1,6 +1,21 @@
 package math;
 
+/**
+ * The MyMath class provides mathematical utility functions.
+ *
+ *  @author  gzark1
+ *  @version 1.0
+ *  @since   2023-05-22
+ */
 public class MyMath {
+
+    /**
+     * Calculates the factorial of a given number.
+     *
+     * @param n The number for which to calculate the factorial.
+     * @return The factorial of the given number.
+     * @throws IllegalArgumentException If the number is less than 0 or greater than 12.
+     */
     public int factorial (int n) {
         if (n < 0 || n > 12) {
             throw new IllegalArgumentException();
@@ -12,6 +27,13 @@ public class MyMath {
         }
     }
 
+    /**
+     * Checks if a number is prime.
+     *
+     * @param n The number to check.
+     * @return true if the number is prime, false otherwise.
+     * @throws IllegalArgumentException If the number is less than 2.
+     */
     public boolean isPrime(int n) {
         // Check if n is less than 2, as prime numbers start from 2
         if (n < 2) {
