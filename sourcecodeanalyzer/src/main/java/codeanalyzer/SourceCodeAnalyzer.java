@@ -1,29 +1,35 @@
 package codeanalyzer;
 
+import codeanalyzer.reader.FileReaderFactory;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Analyzes the contents of a Java source code file 
+ * Analyzes the contents of a Java source code file
  * and calculates the following metrics: loc = lines of code,
- * nom = number of methods, and noc=number of classes. 
+ * nom = number of methods, and noc=number of classes.
  * The current functionality supports two types of source code analysis,
- * namely regex (with the use of regular expressions) and 
+ * namely regex (with the use of regular expressions) and
  * strcomp (with the use of string comparison).
- * This class deliberately contains code smells and violations of design principles. 
+ * This class deliberately contains code smells and violations of design principles.
  * @author agkortzis
  *
  */
 public class SourceCodeAnalyzer {
-	
-	private SourceFileReader fileReader;
-	
+
+	private codeanalyzer.reader.SourceFileReader fileReader;
+
+
 	public SourceCodeAnalyzer(String fileReaderType) {
-		this.fileReader = new SourceFileReader(fileReaderType);
+		//this.fileReader = new SourceFileReader(fileReaderType);
+		FileReaderFactory fileReaderFactory = new FileReaderFactory();
+		this.fileReader = fileReaderFactory.createSourceFileReader(fileReaderType);
 	}
-		
+
+
 	public int calculateLOC(String filepath, String analyzerType) throws IOException {
 		if(analyzerType.equals("regex")) {
 			String sourceCode = fileReader.readFileIntoString(filepath);
@@ -34,29 +40,29 @@ public class SourceCodeAnalyzer {
 	        while (nonCodeLinesMatcher.find()) {
 	        	nonCodeLinesCounter++;
 	        }
-			
+
 	        int sourceFileLength = sourceCode.split("\n").length;
 	        int loc =  sourceFileLength - nonCodeLinesCounter;
-	        
+
 			return loc;
 		} else if (analyzerType.equals("strcomp")) {
 			List<String> sourceCodeList = fileReader.readFileIntoList(filepath);
 			int nonCodeLinesCounter = 0;
 			for (String line : sourceCodeList) {
-				line = line.stripLeading().stripTrailing(); //clear all leading and trailing white spaces
+				line = line.trim(); //clear all leading and trailing white spaces
 				if (line.startsWith("//") || line.startsWith("/*") || line.startsWith("*") || line.equals("{") || line.equals("}") || line.equals(""))
 					nonCodeLinesCounter++;
 			}
 			int loc = sourceCodeList.size() - nonCodeLinesCounter;
-			return loc; 
+			return loc;
 		}
 		return -1;
 	}
-	
+
 	public int calculateNOM(String filepath, String analyzerType) throws IOException {
 		if(analyzerType.equals("regex")) {
 			String sourceCode = fileReader.readFileIntoString(filepath);
-			Pattern pattern = Pattern.compile(".*(public |protected |private |static )?[\\w\\<\\>\\[\\]]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;]).*"); 
+			Pattern pattern = Pattern.compile(".*(public |protected |private |static )?[\\w\\<\\>\\[\\]]+\\s+(\\w+) *\\([^\\)]*\\) *(\\{?|[^;]).*");
 	        Matcher methodSignatures = pattern.matcher(sourceCode);
 
 	        int methodCounter = 0;
@@ -68,21 +74,21 @@ public class SourceCodeAnalyzer {
 			List<String> sourceCodeList = fileReader.readFileIntoList(filepath);
 			int methodCounter = 0;
 			for (String line : sourceCodeList) {
-				line = line.stripLeading().stripTrailing(); //clear all leading and trailing white spaces
+				line = line.trim(); //clear all leading and trailing white spaces
 				if ( ((line.contains("public") || line.contains("private") || line.contains("protected"))
 						|| line.contains("void") || line.contains("int") || line.contains("String"))
 					&& line.contains("(") && line.contains(")") && line.contains("{") )
 					methodCounter++;
 			}
-			return methodCounter; 
+			return methodCounter;
 		}
 		return -1;
 	}
-	
+
 	public int calculateNOC(String filepath, String analyzerType) throws IOException {
 		if(analyzerType.equals("regex")) {
 			String sourceCode = fileReader.readFileIntoString(filepath);
-			Pattern pattern = Pattern.compile(".*\\s*class\\s+.*"); 
+			Pattern pattern = Pattern.compile(".*\\s*class\\s+.*");
 	        Matcher classSignatures = pattern.matcher(sourceCode);
 
 	        int classCounter = 0;
@@ -94,12 +100,12 @@ public class SourceCodeAnalyzer {
 			List<String> sourceCodeList = fileReader.readFileIntoList(filepath);
 			int classCounter = 0;
 			for (String line : sourceCodeList) {
-				line = line.strip(); //remove leading and trailing white spaces
+				line = line.trim(); //remove leading and trailing white spaces
 				if ((line.startsWith("class ") || line.contains(" class ")) && line.contains("{")) {
 					classCounter++;
 				}
 			}
-			return classCounter; 
+			return classCounter;
 		}
 		return -1;
 	}
