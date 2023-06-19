@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import codeanalyzer.*;
+import codeanalyzer.MetricsExporter;
+import codeanalyzer.analyzer.SourceCodeAnalyzer;
+import codeanalyzer.analyzer.SourceCodeAnalyzerFactory;
+import codeanalyzer.reader.FileReaderFactory;
 
 public class DemoClient {
 
@@ -26,16 +29,17 @@ public class DemoClient {
 			System.exit(1);
 		}
 
-		SourceCodeAnalyzer analyzer = new SourceCodeAnalyzer(sourceFileLocation);
-		int loc = analyzer.calculateLOC(filepath, sourceCodeAnalyzerType);
-		int nom = analyzer.calculateNOM(filepath, sourceCodeAnalyzerType);
-		int noc = analyzer.calculateNOC(filepath, sourceCodeAnalyzerType);
+		SourceCodeAnalyzerFactory analyzerFactory = new SourceCodeAnalyzerFactory();
+		SourceCodeAnalyzer analyzer = analyzerFactory.createSourceCodeAnalyzer(sourceCodeAnalyzerType, sourceFileLocation);
+		int loc = analyzer.calculateLOC(filepath);
+		int nom = analyzer.calculateNOM(filepath);
+		int noc = analyzer.calculateNOC(filepath);
 		
 		Map<String, Integer> metrics = new HashMap<>();
 		metrics.put("loc",loc);
 		metrics.put("nom",nom);
 		metrics.put("noc",noc);
-				
+		System.out.println("metricsexporter was called.");
 		MetricsExporter exporter = new MetricsExporter();
 		exporter.writeFile(outputFileType, metrics, outputFilePath);
 	}

@@ -15,6 +15,16 @@ Classes Participating in the Pattern:
 * WebFileReader (Concrete Implementation): This class also implements the SourceFileReader interface and handles the reading of a file stored on the web.
 * FileReaderFactory (Factory): The factory class is responsible for creating instances of SourceFileReader. It contains the createSourceFileReader method that takes a type parameter and returns the appropriate concrete implementation of SourceFileReader based on the provided type. It follows the factory method pattern, allowing for flexible instantiation of SourceFileReader objects.
 
+### SourceCodeAnalyzer: Factory Pattern with Interface
+The chosen design pattern is the Factory Method pattern, which is implemented using the Factory Method and Abstract Factory patterns.
+The Factory Method pattern enhances flexibility and extensibility in the system. It allows easy addition of new SourceCodeAnalyzer types without modifying existing code. New subclasses can be created to support different analysis techniques. However, this adds complexity and tight coupling between the factory class and concrete classes.
+Classes participating in the pattern and their roles:
+
+* SourceCodeAnalyzerFactory: This class serves as the factory class and implements the Factory Method pattern. It contains the createSourceCodeAnalyzer method that creates instances of SourceCodeAnalyzer objects based on the analyzerType. It encapsulates the creation logic and promotes the principle of separation of concerns.
+* SourceCodeAnalyzer: This abstract class represents the product interface or abstract product. It defines the common interface and declares the abstract methods for calculating metrics (calculateLOC, calculateNOM, calculateNOC). Concrete subclasses of SourceCodeAnalyzer provide the specific implementations for different analyzer types.
+* RegexAnalyzer and StrCompAnalyzer: These concrete classes extend the SourceCodeAnalyzer class and provide the implementations for analyzing source code using different techniques (regex-based and string comparison). They override the abstract methods to calculate the metrics based on the respective algorithms.
+* By applying the Factory Method pattern, the code achieves a modular and extensible design. It allows the system to support different types of source code analyzers while promoting code reusability and maintainability.
+
 ## Build the project
 
 1. Build the executable Java application with:
