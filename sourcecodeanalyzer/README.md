@@ -15,7 +15,7 @@ Classes Participating in the Pattern:
 * WebFileReader (Concrete Implementation): This class also implements the SourceFileReader interface and handles the reading of a file stored on the web.
 * FileReaderFactory (Factory): The factory class is responsible for creating instances of SourceFileReader. It contains the createSourceFileReader method that takes a type parameter and returns the appropriate concrete implementation of SourceFileReader based on the provided type. It follows the factory method pattern, allowing for flexible instantiation of SourceFileReader objects.
 
-### SourceCodeAnalyzer: Factory Pattern with Interface
+### SourceCodeAnalyzer: Factory Pattern with Astract class 
 The chosen design pattern is the Factory Method pattern, which is implemented using the Factory Method and Abstract Factory patterns.
 The Factory Method pattern enhances flexibility and extensibility in the system. It allows easy addition of new SourceCodeAnalyzer types without modifying existing code. New subclasses can be created to support different analysis techniques. However, this adds complexity and tight coupling between the factory class and concrete classes.
 Classes participating in the pattern and their roles:
