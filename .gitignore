@@ -1,4 +1,5 @@
 .idea
 gradeshistogram/target
 gradeshistogram/gradeshistogram.iml
-src
+sourcecodeanalyzer/target
+
